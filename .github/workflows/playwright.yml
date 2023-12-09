@@ -1,15 +1,5 @@
 name: Playwright Tests
 
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
-
 jobs:
   test:
     timeout-minutes: 60
@@ -20,13 +10,9 @@ jobs:
         environment: [Qa1, Qa2]
         brand: [Chevrolet, Buick]
 
-    inputs:
-      env:
-        description: "Select environment"
-        required: true
-      selectedBrand:
-        description: "Select brand"
-        required: true
+    env:
+      SELECTED_ENV: ${{ matrix.environment }}
+      SELECTED_BRAND: ${{ matrix.brand }}
 
     steps:
     - uses: actions/checkout@v3
@@ -38,7 +24,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --project="${{ matrix.env }}${{ matrix.selectedBrand }}"
+      run: npx playwright test --project="${{ env.SELECTED_ENV }}${{ env.SELECTED_BRAND }}"
     - uses: actions/upload-artifact@v3
       if: always()
       with:
