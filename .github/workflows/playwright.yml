@@ -58,3 +58,7 @@ jobs:
       if: always()
       id: deployment
       uses: actions/deploy-pages@v2
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: playwright-report/
