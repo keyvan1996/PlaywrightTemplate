@@ -1,37 +1,61 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: 18
-    - name: Install dependencies
+
+    - name: Install Dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
+
+    - name: Run Playwright Tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v3
+
+    - name: Upload Playwright Report Artifact
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
     - name: Setup Pages
       uses: actions/configure-pages@v2
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
+
+    - name: Upload Pages Artifact
+      uses: actions/upload-artifact@v3
+      if: always()
       with:
-        # Upload entire repository
+        name: pages
         path: test-merge-report-demo/
+
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v1
+      uses: actions/deploy-pages@v2
+      with:
+        # Set up deployment configuration as needed
+        # Example:
+        #   repo-token: ${{ secrets.GITHUB_TOKEN }}
+        #   target-folder: pages
