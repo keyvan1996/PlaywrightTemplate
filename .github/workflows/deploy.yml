@@ -1,3 +1,6 @@
+on:
+  workflow_dispatch:
+    branches: [ main, master ]
 jobs:
   # Build job
   build:
