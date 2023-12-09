@@ -48,7 +48,7 @@ jobs:
       if: always()
       with:
         name: github-pages
-        path: playwright-report/
+        path: github-pages/
         retention-days: 30
     - name: Deploy to GitHub Pages
       id: deployment
