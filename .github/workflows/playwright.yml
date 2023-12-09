@@ -48,8 +48,8 @@ jobs:
       if: always()
       with:
         name: github-pages
-        path: github-pages/
+        path: playwright-report/
         retention-days: 30
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v3 # or specific "vX.X.X" version tag for this action
+    # - name: Deploy to GitHub Pages
+    #   id: deployment
+    #   uses: actions/deploy-pages@v3 # or specific "vX.X.X" version tag for this action
