@@ -43,7 +43,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.4
+      uses: JamesIves/github-pages-deploy-action@<latest_version>
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages  # Set the branch where GitHub Pages will be deployed
