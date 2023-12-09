@@ -9,8 +9,18 @@ on:
         options:
         - Qa1
         - Qa2
-      description:
-        required: true
+      brand:
+        type: choice
+        description: The brand to run the tests in
+        options:
+        - Chevrolet
+        - Gmc
+      tag:
+        type: choice
+        description: The tag to run the tests
+        options:
+        - high
+        - low
 jobs:
   test:
     timeout-minutes: 60
@@ -25,7 +35,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --grep @${{ inputs.tag }}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
