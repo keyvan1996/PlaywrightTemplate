@@ -15,8 +15,8 @@ export class LoginPage {
 }
 async login() {
     logger.info(`[${this.login.name}] - entering user info to login`)
-    this.usernameField.fill('standard_user')
-    this.passwordField.fill('secret_sauce')
-    this.loginButton.click()
+    await this.usernameField.fill('standard_user')
+    await this.passwordField.fill('secret_sauce')
+    await this.loginButton.click()
 }
 }
