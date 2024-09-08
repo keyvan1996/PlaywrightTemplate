@@ -24,15 +24,23 @@ export function getEnv(): string {
 
 // Build the base URL using the extracted values
 export function getBaseUrl(): string {
-  const env = getEnv();
-  let baseUrl;
-
-  if (env === 'prod') {
-    baseUrl = `https://www.saucedemo.com`
+    const env = getEnv();
+    let baseUrl: string;
+  
+    switch (env) {
+      case 'prod':
+        baseUrl = `https://www.saucedemo.com`;
+        break;
+      case 'test':
+        baseUrl = `https://www.saucedemo.com`;
+        break;
+      default:
+        throw new Error(`Unknown environment: ${env}`);
+    }
+  
+    logger.info(`[${getBaseUrl.name}] - Base URL generated: ${baseUrl}`);
+    return baseUrl;
   }
-  logger.info(`[${getBaseUrl.name}] - Base URL generated: ${baseUrl}`);
-  return baseUrl;
-}
 
 // Function to get feature flags for the current environment
 export function getCurrentFeatureFlags(): { [key: string]: boolean } {
