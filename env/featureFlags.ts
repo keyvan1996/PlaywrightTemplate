@@ -1,11 +1,11 @@
 export const featureFlags = {
     test: {
-      featureX: true,  // Enable feature X in development
-      featureY: false, // Disable feature Y in development
+      featureX: false,
+      featureY: false,
     },
     prod: {
-      featureX: false, // Disable feature X in production
-      featureY: false, // Disable feature Y in production
+      featureX: false,
+      featureY: false,
     },
   };
   
