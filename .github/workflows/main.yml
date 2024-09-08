@@ -111,7 +111,7 @@ jobs:
             command="$command --retries=${{ inputs.retries }}"
           fi
         fi
-
+        echo "Running command: $command"
         $command
       shell: bash
     - name: Upload artifact
