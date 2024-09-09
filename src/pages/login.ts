@@ -3,11 +3,13 @@ import logger from "../utils/logger";
 import * as dataLogin from '../data/login.json'
 
 export class LoginPage {
+  private page: Page
   private usernameField: Locator;
   private passwordField: Locator;
   private loginButton: Locator;
 
   constructor(page: Page) {
+    this.page = page;
     this.usernameField = page.locator('input[placeholder="Username"]');
     this.passwordField = page.locator('input[placeholder="Password"]');
     this.loginButton = page.locator("input#login-button");
