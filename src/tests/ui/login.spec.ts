@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login';
-import { getBaseUrl, getCurrentFeatureFlags } from '../env/env';
+import { LoginPage } from '../../pages/login';
+import { getBaseUrl, getCurrentFeatureFlags } from '../../env/env';
 
 test('validate user can login', async ({ page }) => {
     const loginPage = new LoginPage(page);
