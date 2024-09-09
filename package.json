@@ -9,9 +9,11 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.47.0",
-    "@types/node": "^20.10.4"
+    "@types/node": "^20.16.5",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "moment-timezone": "^0.5.45",
     "winston": "^3.14.2"
   }

@@ -1,5 +1,4 @@
 import { test } from '@playwright/test';
-import logger from '../utils/logger';
 import { getFeatureFlags } from './featureFlags';
 
 // Function to parse the project name and extract env, department, and brand
@@ -8,17 +7,12 @@ function parseProjectName(): { env: string} {
 
   // Extract values from project name
   const env = projectName.match(/^Test|Prod/i)?.[0] || 'unknown';
-
-  logger.info(`Parsed project name: ${projectName}`);
-  logger.info(`Environment: ${env}`);
-
   return { env};
 }
 
 // Function to return environment
 export function getEnv(): string {
   const env = parseProjectName().env.toLowerCase();
-  logger.info(`Environment fetched: ${env}`);
   return env;
 }
 
@@ -37,8 +31,6 @@ export function getBaseUrl(): string {
       default:
         throw new Error(`Unknown environment: ${env}`);
     }
-  
-    logger.info(`[${getBaseUrl.name}] - Base URL generated: ${baseUrl}`);
     return baseUrl;
   }
 
@@ -46,6 +38,5 @@ export function getBaseUrl(): string {
 export function getCurrentFeatureFlags(): { [key: string]: boolean } {
   const env = getEnv();
   const flags = getFeatureFlags(env);
-  logger.info(`Feature flags for ${env}: ${JSON.stringify(flags)}`);
   return flags;
 }
