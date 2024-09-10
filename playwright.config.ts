@@ -42,7 +42,7 @@ export default defineConfig({
     {
       name: 'Prod',
       use: { ...devices['Desktop Chrome'] },
-    }
+    },
 
     /* Test against mobile viewports. */
     // {
