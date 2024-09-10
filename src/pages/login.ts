@@ -11,7 +11,6 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page;
     this.usernameField = page.locator('input[placeholder="Username"]');
-
     this.passwordField = page.locator('input[placeholder="Password"]');
     this.loginButton = page.locator('input#login-button');
   }
