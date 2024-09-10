@@ -10,5 +10,5 @@ export const featureFlags = {
 };
 
 export function getFeatureFlags(env: string): { [key: string]: boolean } {
-  return featureFlags[env] || featureFlags['prod']; // Default to 'prod' if env not found
+  return featureFlags[env as keyof typeof featureFlags] || featureFlags['prod']; // Default to 'prod' if env not found
 }
