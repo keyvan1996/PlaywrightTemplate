@@ -1,5 +1,6 @@
 import { test } from '@playwright/test';
 import { getFeatureFlags } from './featureFlags';
+import { FeatureFlags } from 'src/types/featureFlags';
 
 // Function to parse the project name and extract env, department, and brand
 function parseProjectName(): { env: string } {
@@ -34,9 +35,9 @@ export function getBaseUrl(): string {
   return baseUrl;
 }
 
-// Function to get feature flags for the current environment
-export function getCurrentFeatureFlags(): { [key: string]: boolean } {
+// getCurrentFeatureFlags function returning a valid FeatureFlags object
+export function getCurrentFeatureFlags(): FeatureFlags {
   const env = getEnv();
   const flags = getFeatureFlags(env);
-  return flags;
+  return flags; // No need to cast anymore
 }
