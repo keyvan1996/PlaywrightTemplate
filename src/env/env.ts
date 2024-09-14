@@ -2,26 +2,35 @@ import { test } from '@playwright/test';
 import { getFeatureFlags } from './featureFlags';
 import { FeatureFlags } from 'src/types/featureFlags';
 
-// Function to parse the project name and extract env, department, and brand
+/**
+ * Extracts the environment name from the project name.
+ *
+ * @return {{ env: string }} An object containing the environment name.
+ */
 function parseProjectName(): { env: string } {
-  const projectName = test.info().project.name; // Get the project name (e.g., 'QaPartsChevrolet')
-
+  const projectName = test.info().project.name;
   // Extract values from project name
   const env = projectName.match(/^Test|Prod/i)?.[0] || 'unknown';
   return { env };
 }
 
-// Function to return environment
+/**
+ * Returns the environment name based on the project name.
+ *
+ * @return {string} The environment name (e.g., 'test' or 'prod')
+ */
 export function getEnv(): string {
   const env = parseProjectName().env.toLowerCase();
   return env;
 }
 
-// Build the base URL using the extracted values
+/**
+ * Returns the base URL based on the current environment.
+ * @return {string} The base URL for the current environment.
+ */
 export function getBaseUrl(): string {
   const env = getEnv();
   let baseUrl: string;
-
   switch (env) {
     case 'prod':
       baseUrl = `https://www.saucedemo.com`;
@@ -35,7 +44,11 @@ export function getBaseUrl(): string {
   return baseUrl;
 }
 
-// getCurrentFeatureFlags function returning a valid FeatureFlags object
+/**
+ * Returns the current feature flags based on the environment.
+ *
+ * @return {FeatureFlags} The current feature flags
+ */
 export function getCurrentFeatureFlags(): FeatureFlags {
   const env = getEnv();
   const flags = getFeatureFlags(env);

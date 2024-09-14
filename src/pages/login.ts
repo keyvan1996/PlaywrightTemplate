@@ -16,8 +16,13 @@ export class LoginPage {
     this.loginButton = page.locator('input#login-button');
   }
 
+  /**
+   * Attempts to log in to the application using the provided credentials.
+   * @async
+   * @return {Promise<void>} A promise that resolves when the login process is complete.
+   */
   async login() {
-    logger.info(`method: [${this.login.name}] - is mobile: ${isMobile()}`); // example of using isMobile in pages files
+    logger.info(`method: [${this.login.name}] - isMobile: ${isMobile()}`); // example of using isMobile in pages files
     const { username, password } = dataLogin.validUser;
     logger.info(`method: [${this.login.name}] - trying to login with username: ${username}`);
     await this.usernameField.fill(username);
