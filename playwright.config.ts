@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { isRunningOnMobile } from '@utils/exportEnvironmentVariables';
+import { getEnvConfig } from '@utils/exportEnvironmentVariables';
 import dotenv from 'dotenv';
 
 /**
@@ -49,14 +49,14 @@ export default defineConfig({
       name: 'Test',
       use: {
         ...devices['Desktop Chrome'], // Always keep Desktop Chrome
-        ...(isRunningOnMobile() ? viewportConfig : {}), // Add viewport and isMobile conditionally
+        ...(getEnvConfig().IS_RUNNING_ON_MOBILE ? viewportConfig : {}), // Add viewport and isMobile conditionally
       },
     },
     {
       name: 'Prod',
       use: {
         ...devices['Desktop Chrome'], // Always keep Desktop Chrome
-        ...(isRunningOnMobile() ? viewportConfig : {}), // Add viewport and isMobile conditionally
+        ...(getEnvConfig().IS_RUNNING_ON_MOBILE ? viewportConfig : {}), // Add viewport and isMobile conditionally
       },
     },
   ],
