@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import logger from '@utils/logger';
 import * as dataLogin from '@data/login.json';
+import { isMobile } from '@utils/exportEnvironmentVariables';
 
 export class LoginPage {
   private page: Page;
@@ -16,6 +17,7 @@ export class LoginPage {
   }
 
   async login() {
+    logger.info(`method: [${this.login.name}] - is mobile: ${isMobile()}`); // example of using isMobile in pages files
     const { username, password } = dataLogin.validUser;
     logger.info(`method: [${this.login.name}] - trying to login with username: ${username}`);
     await this.usernameField.fill(username);

@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '@pages/login';
 import { getBaseUrl, getCurrentFeatureFlags } from '@env/env';
+import logger from '@utils/logger';
 
-test('validate user can login', async ({ page }) => {
+test('validate user can login', async ({ page, isMobile }) => {
+  logger.info(`isMobile: ${isMobile}`); // example of using isMobile in a test
   const loginPage = new LoginPage(page);
   await page.goto(getBaseUrl());
   await loginPage.login();

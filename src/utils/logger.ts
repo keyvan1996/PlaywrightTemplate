@@ -3,11 +3,11 @@ import winston from 'winston';
 // import path from "path";
 import moment from 'moment-timezone';
 import { test } from '@playwright/test';
+import { isLoggerEnabled } from './exportEnvironmentVariables';
 
-const IS_LOGGER_ENABLED = process.env.IS_LOGGER_ENABLED === 'true';
 let logger: winston.Logger;
 
-if (IS_LOGGER_ENABLED) {
+if (isLoggerEnabled()) {
   // Uncomment the following if you need file logging
   // const currentDir = __dirname;
   // const srcDir = path.resolve(currentDir, "..");
