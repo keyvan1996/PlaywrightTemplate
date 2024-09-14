@@ -43,6 +43,7 @@ if (getEnvConfig().IS_LOGGER_ENABLED) {
   const timeZone = 'America/New_York';
 
   logger = winston.createLogger({
+    level: 'debug', // Set the minimum level to 'debug' to include all levels
     format: winston.format.combine(winston.format.timestamp({ format: () => moment().tz(timeZone).format() }), customFormat),
     transports: [
       new winston.transports.Console(),
