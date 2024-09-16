@@ -44,6 +44,22 @@ export function getBaseUrl(): string {
   return baseUrl;
 }
 
+export function getApiBaseUrl(): string {
+  const env = getEnv();
+  let baseUrl: string;
+  switch (env) {
+    case 'prod':
+      baseUrl = `https://dummyjson.com`;
+      break;
+    case 'test':
+      baseUrl = `https://dummyjson.com`;
+      break;
+    default:
+      throw new Error(`Unknown environment: ${env}`);
+  }
+  return baseUrl;
+}
+
 /**
  * Returns the current feature flags based on the environment.
  *
