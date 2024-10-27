@@ -129,8 +129,8 @@ jobs:
             echo "Contents of the current working directory:"
             ls -la
             
-            echo "Attempting to copy playwright-report to playwright-report directory"
-            cp -r playwright-report/* playwright-report/
+            # echo "Attempting to copy playwright-report to playwright-report directory"
+            # cp -r playwright-report/* playwright-report/
           shell: bash
     deploy:
       if: always()
