@@ -1,0 +1,153 @@
+on:
+    workflow_dispatch:
+      inputs:
+        environment:
+          type: choice
+          description: The environment to run the tests in
+          required: true
+          default: Test
+          options:
+          - Test
+          - Prod
+        workers:
+          type: choice
+          description: The number of workers to use for the tests
+          required: true
+          default: 2
+          options:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+          - 16
+          - 17
+          - 18
+          - 19
+          - 20
+        retries:
+          type: choice
+          description: The number of retires for failed tests (greater retries will take longer to run)
+          required: true
+          default: 0
+          options:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+        tag:
+          description: The tag to run the tests. such as high, medium, low, deployment, smoke, regression, etc.
+          type: string
+        fileName:
+          description: The name of the test file to run. such as smokeTest.spec.ts, login.spec.ts, etc.
+          type: string
+    # Scheduled trigger to run every 15 minutes
+    # schedule:
+    #   - cron: '*/15 * * * *'  # Runs every 15 minutes
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: |
+          npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium
+      - name: Run Playwright tests
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Use environment variables for scheduled runs
+            command="npx playwright test --project=${{ vars.ENVIRONMENT }}"
+  
+            if [ -n "${{ vars.TAG }}" ]; then
+              command="$command --grep @${{ vars.TAG }}"
+            fi
+  
+            if [ -n "${{ vars.FILENAME }}" ]; then
+              command="$command ${{ vars.FILENAME }}"
+            fi
+  
+            if [ -n "${{ vars.WORKERS }}" ]; then
+              command="$command --workers=${{ vars.WORKERS }}"
+            fi
+  
+            if [ -n "${{ vars.RETRIES }}" ]; then
+              command="$command --retries=${{ vars.RETRIES }}"
+            fi
+  
+          else
+            # Use inputs for manual runs
+            command="npx playwright test --project=${{ inputs.environment }}"
+  
+            if [ -n "${{ inputs.tag }}" ]; then
+              command="$command --grep @${{ inputs.tag }}"
+            fi
+  
+            if [ -n "${{ inputs.fileName }}" ]; then
+              command="$command ${{ inputs.fileName }}"
+            fi
+  
+            if [ -n "${{ inputs.workers }}" ]; then
+              command="$command --workers=${{ inputs.workers }}"
+            fi
+  
+            if [ -n "${{ inputs.retries }}" ]; then
+              command="$command --retries=${{ inputs.retries }}"
+            fi
+          fi
+          echo "Running command: $command"
+          $command
+        shell: bash
+      - name: 📊 Prepare HTML Report Directory
+        if: always()
+        run: |
+            echo "Removing existing playwright-report directory if it exists..."
+            rm -rf $GITHUB_WORKSPACE/playwright-report
+            
+            echo "Creating playwright-report directory..."
+            mkdir -p $GITHUB_WORKSPACE/playwright-report
+            
+            echo "Current working directory:"
+            pwd
+            
+            echo "Contents of the current working directory:"
+            ls -la
+            
+            echo "Attempting to copy playwright-report to api_tests_stage directory"
+            cp -r $GITHUB_WORKSPACE/playwright-report/* $GITHUB_WORKSPACE/playwright-report/
+        shell: bash
+    deploy:
+      if: always()
+      needs: test
+      permissions:
+        pages: write
+        id-token: write
+      environment:
+        name: ${{ inputs.environment }}-HTMl-Report
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: 📊 Deploy HTML Report
+          if: always()
+          uses: actions/deploy-pages@v3
+          with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: playwright-report
+          destination_dir: playwright-report
+
