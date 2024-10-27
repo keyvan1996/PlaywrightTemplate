@@ -130,7 +130,7 @@ jobs:
             ls -la
             
             echo "Attempting to copy playwright-report to playwright-report directory"
-            cp -r $GITHUB_WORKSPACE/playwright-report/* $GITHUB_WORKSPACE/playwright-report/
+            cp -r playwright-report/* playwright-report/
           shell: bash
     deploy:
       if: always()
