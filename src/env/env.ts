@@ -65,8 +65,8 @@ export function getApiBaseUrl(): string {
  *
  * @return {FeatureFlags} The current feature flags
  */
-export function getCurrentFeatureFlags(): FeatureFlags {
+export async function getCurrentFeatureFlags(): Promise<FeatureFlags> {
   const env = getEnv();
-  const flags = getFeatureFlags(env);
-  return flags; // No need to cast anymore
+  const flags = await getFeatureFlags(env);
+  return flags;
 }

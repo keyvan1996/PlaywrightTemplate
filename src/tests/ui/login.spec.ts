@@ -10,7 +10,7 @@ test('validate user can login', async ({ page, isMobile }) => {
   const loginPage = new LoginPage(page);
   await page.goto(getBaseUrl());
   await loginPage.login(username, password);
-  if (getCurrentFeatureFlags().featureX) {
+  if ((await getCurrentFeatureFlags()).featureX) {
     await expect(page).toHaveURL(`${getBaseUrl()}/inventory`);
   } else {
     await expect(page).toHaveURL(`${getBaseUrl()}/inventory.html`);

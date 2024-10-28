@@ -24,6 +24,7 @@ export function getEnvConfig(): EnvConfig {
   return {
     IS_LOGGER_ENABLED: process.env.IS_LOGGER_ENABLED || 'false',
     IS_RUNNING_ON_MOBILE: process.env.IS_RUNNING_ON_MOBILE || 'false',
+    POST_HOG_TOKEN: process.env.POST_HOG_TOKEN || '',
     // Add more environment variables as needed
   };
 }
