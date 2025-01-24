@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import logger from '@utils/logger';
 import { isMobile } from '@utils/exportEnvironmentVariables';
+import { step } from '@utils/step';
 
 export class LoginPage {
   private page: Page;
@@ -22,6 +23,7 @@ export class LoginPage {
    * @param {string} password - The password to use for logging in.
    * @return {Promise<void>} A promise that resolves when the login process is complete.
    */
+  @step('Login')
   async login(username: string, password: string) {
     logger.info(`method: [${this.login.name}] - isMobile: ${isMobile()}`); // example of using isMobile in pages files
     logger.info(`method: [${this.login.name}] - trying to login with username: ${username}`);
